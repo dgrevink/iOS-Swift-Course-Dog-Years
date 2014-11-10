@@ -12,7 +12,8 @@ class ViewController: UIViewController {
 
     @IBOutlet weak var dogYearTextField: UITextField!
     @IBOutlet weak var humanYearLabel: UITextField!
-    let conversionConstant = 7;
+    let conversionConstantUntil2 = 10.5;
+    let conversionConstantAfter2 = 4.0;
     
     
     override func viewDidLoad() {
@@ -26,14 +27,21 @@ class ViewController: UIViewController {
     }
 
     @IBAction func convertDogYearsToHumanYearsButton(sender: AnyObject) {
-        var dogYears : Int? = dogYearTextField.text.toInt();
+        var dogYears : Double? = (dogYearTextField.text as NSString).doubleValue;
         
         if (dogYears == nil) {
             humanYearLabel.text = "Error ! Please enter an integer"
             humanYearLabel.textColor = UIColor.redColor()
         }
         else {
-            var humanYears = dogYears! * conversionConstant;
+            
+            var humanYears :Double = 0;
+            if (dogYears <= 2) {
+                humanYears = dogYears! * conversionConstantUntil2
+            }
+            else {
+                humanYears = (2 * conversionConstantUntil2) + Double(dogYears! - 2) * conversionConstantAfter2
+            }
             humanYearLabel.text = "In human years, your dog is \(humanYears) years old.";
             humanYearLabel.textColor = UIColor.brownColor()
         }
